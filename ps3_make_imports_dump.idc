@@ -3,5 +3,5 @@
 
 static main()
 {
-	define_imports(ScreenEA(), ScreenEA() + 0x2C);
+    define_imports(ScreenEA(), ScreenEA() + 0x2C);
 }

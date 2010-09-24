@@ -3,5 +3,5 @@
 
 static main()
 {
-	define_exports(ScreenEA(), ScreenEA() + 0x1C);
+    define_exports(ScreenEA(), ScreenEA() + 0x1C);
 }

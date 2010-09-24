@@ -3,13 +3,13 @@
 
 static lookup_nid(library, nid)
 {
-	auto name;
-	name = ps3libdoc_name_for_nid(library, nid);
-	if (name == BADADDR)
-	{
-		name = form("%s_UNK_%08X", library, nid);
-	}
-	return name;
+    auto name;
+    name = ps3libdoc_name_for_nid(library, nid);
+    if (name == BADADDR)
+    {
+        name = form("%s_UNK_%08X", library, nid);
+    }
+    return name;
 }
 
 static define_import_struct()
@@ -21,24 +21,24 @@ static define_import_struct()
     
     if (id == -1)
     {
-	    DelStruc(GetStrucIdByName(name));
-	    id = AddStrucEx(-1, name, 0);
-	    AddStrucMember(id, "size",           0x00, FF_WORD | FF_DATA,             0, 2);
-	    AddStrucMember(id, "unknown02",      0x02, FF_WORD | FF_DATA,            -1, 2);
-	    AddStrucMember(id, "unknown04",      0x04, FF_WORD | FF_DATA,            -1, 2);
-	    AddStrucMember(id, "function_count", 0x06, FF_WORD | FF_DATA | FF_0NUMD, -1, 2);
-	    AddStrucMember(id, "unknown08",      0x08, FF_DWRD | FF_DATA,            -1, 4);
-	    AddStrucMember(id, "unknown0C",      0x0C, FF_DWRD | FF_DATA,            -1, 4);
-	    AddStrucMember(id, "name",           0x10, FF_DWRD | FF_DATA | FF_0OFF,  -1, 4);
-	    AddStrucMember(id, "nid_table",      0x14, FF_DWRD | FF_DATA | FF_0OFF,  -1, 4);
-	    AddStrucMember(id, "stub_table",     0x18, FF_DWRD | FF_DATA | FF_0OFF,  -1, 4);
-	    AddStrucMember(id, "unknown1C",      0x1C, FF_DWRD | FF_DATA,            -1, 4);
-	    AddStrucMember(id, "unknown20",      0x20, FF_DWRD | FF_DATA,            -1, 4);
-	    AddStrucMember(id, "unknown24",      0x24, FF_DWRD | FF_DATA,            -1, 4);
-	    AddStrucMember(id, "unknown28",      0x28, FF_DWRD | FF_DATA,            -1, 4);
-	}
-	
-	return name;
+        DelStruc(GetStrucIdByName(name));
+        id = AddStrucEx(-1, name, 0);
+        AddStrucMember(id, "size",           0x00, FF_WORD | FF_DATA,             0, 2);
+        AddStrucMember(id, "unknown02",      0x02, FF_WORD | FF_DATA,            -1, 2);
+        AddStrucMember(id, "unknown04",      0x04, FF_WORD | FF_DATA,            -1, 2);
+        AddStrucMember(id, "function_count", 0x06, FF_WORD | FF_DATA | FF_0NUMD, -1, 2);
+        AddStrucMember(id, "unknown08",      0x08, FF_DWRD | FF_DATA,            -1, 4);
+        AddStrucMember(id, "unknown0C",      0x0C, FF_DWRD | FF_DATA,            -1, 4);
+        AddStrucMember(id, "name",           0x10, FF_DWRD | FF_DATA | FF_0OFF,  -1, 4);
+        AddStrucMember(id, "nid_table",      0x14, FF_DWRD | FF_DATA | FF_0OFF,  -1, 4);
+        AddStrucMember(id, "stub_table",     0x18, FF_DWRD | FF_DATA | FF_0OFF,  -1, 4);
+        AddStrucMember(id, "unknown1C",      0x1C, FF_DWRD | FF_DATA,            -1, 4);
+        AddStrucMember(id, "unknown20",      0x20, FF_DWRD | FF_DATA,            -1, 4);
+        AddStrucMember(id, "unknown24",      0x24, FF_DWRD | FF_DATA,            -1, 4);
+        AddStrucMember(id, "unknown28",      0x28, FF_DWRD | FF_DATA,            -1, 4);
+    }
+    
+    return name;
 }
 
 static define_imports(seg_start, seg_end)
@@ -55,11 +55,11 @@ static define_imports(seg_start, seg_end)
     
     for (offset = 0; offset < size; offset = offset + 0x2C)
     {
-    	if (Byte(seg_start + offset) != 0x2C)
-    	{
-    		Message("Can't define import: size at %X is not 0x2C!\n", seg_start + offset);
-    		break;
-    	}
+        if (Byte(seg_start + offset) != 0x2C)
+        {
+            Message("Can't define import: size at %X is not 0x2C!\n", seg_start + offset);
+            break;
+        }
 
         MakeUnknown(seg_start + offset, 0x2C, DOUNK_SIMPLE);
         MakeStruct(seg_start + offset, struct_name);
@@ -67,9 +67,9 @@ static define_imports(seg_start, seg_end)
         function_count = Word(seg_start + offset + 0x06);
         if (function_count == 0)
         {
-        	continue;
+            continue;
         }
-		
+        
         library_name_offset = Dword(seg_start + offset + 0x10);
         nid_table = Dword(seg_start + offset + 0x14);
         stub_table = Dword(seg_start + offset + 0x18);
