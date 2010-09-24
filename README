@@ -1,7 +1,16 @@
 You can easily identify export / import structures in a memory dump by looking 
-for the module name (such as "cellNetCtl_Library"), before the name there will 
-be several structures starting with 0x1C followed by more structures starting 
-with 0x2C. 0x1C structures are exports, 0x2C structures are imports.
+for the module name (such as "cellNetCtl_Library").
+
+Before the name there will be several structures starting with 0x1C followed by 
+more structures starting with 0x2C. 0x1C structures are exports, 0x2C structures 
+are imports.
+
+Following shortly after the module name appear to be five pointers:
+    unknown_pointer
+    export_table_start
+    export_table_end
+    import_table_start
+    import_table_end
 
 Don't forget to rebase your dump to the memory address after loading it as a raw 
 file or the scripts will probably blow up.
