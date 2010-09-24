@@ -87,6 +87,14 @@ static define_exports(seg_start, seg_end)
         }
         
         library_name_offset = Dword(seg_start + offset + 0x10);
+        
+        // I'm sure there's a flag that indicates if this is a real export table
+        // or not but for now, this will work.
+        if (library_name_offset == 0)
+        {
+            continue;
+        }
+        
         nid_table = Dword(seg_start + offset + 0x14);
         pair_table = Dword(seg_start + offset + 0x18);
         
@@ -113,6 +121,7 @@ static define_exports(seg_start, seg_end)
             
             MakeUnknown(pair_offset, 8, DOUNK_SIMPLE);
             MakeStruct(pair_offset, pair_struct_name);
+            MakeNameEx(pair_offset, lookup_nid(library_name, Dword(nid_table + (index * 4))) + "_pair", 0);
             
             function_offset = Dword(pair_offset + 0);
             
